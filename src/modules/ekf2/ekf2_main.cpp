@@ -753,7 +753,7 @@ void Ekf2::run()
 								    _mag_data_sum[2] *mag_sample_count_inv - _mag_bias_z.get()
 								   };
 
-					_ekf.setMagData(1000 * (uint64_t)mag_time_ms, mag_data_avg_ga);
+					_ekf.setMagData(1000 * mag_time_ms, mag_data_avg_ga);
 
 					_mag_time_ms_last_used = mag_time_ms;
 					_mag_time_sum_ms = 0;
@@ -814,7 +814,7 @@ void Ekf2::run()
 					balt_data_avg += pstatic_err / (airdata.rho * CONSTANTS_ONE_G);
 
 					// push to estimator
-					_ekf.setBaroData(1000 * (uint64_t)balt_time_ms, balt_data_avg);
+					_ekf.setBaroData(1000 * balt_time_ms, balt_data_avg);
 
 					_balt_time_ms_last_used = balt_time_ms;
 					_balt_time_sum_ms = 0;
@@ -1092,7 +1092,7 @@ void Ekf2::run()
 
 			// Position of local NED origin in GPS / WGS84 frame
 			map_projection_reference_s ekf_origin;
-			uint64_t origin_time;
+			int64_t origin_time;
 
 			// true if position (x,y,z) has a valid WGS-84 global reference (ref_lat, ref_lon, alt)
 			const bool ekf_origin_valid = _ekf.get_ekf_origin(&origin_time, &ekf_origin, &lpos.ref_alt);
